@@ -26,15 +26,20 @@ sudo apt install ansible
 ansible_project/
 ├── group_vars/
 │   └── all.yml
+
 ├── roles/
-│   ├── ca_certificates/
+│   ├── ca_certs/
 │   │   ├── files/
 │   │   │   ├── CA1.crt
 │   │   │   ├── CA2.crt
 │   │   │   ├── CA3.crt
+│   │   │   ├── CA1.key
+│   │   │   ├── CA2.key
+│   │   │   ├── CA3.key
 │   │   ├── tasks/
 │   │   │   └── main.yml
-│   ├── app_deployment/
+
+│   ├──deploy_app/
 │   │   ├── files/
 │   │   │   ├── Example-1.1.1-py3-none-any.whl
 │   │   │   ├── app.py
@@ -44,6 +49,7 @@ ansible_project/
 │   │   ├── templates/
 │   │   │   ├── config.py.j2
 │   │   │   └── example.service.j2
+
 ├── inventory.ini
 ├── playbook.yml
 └── .git
