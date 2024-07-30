@@ -1,6 +1,8 @@
 # ansible-devops-assessment
 ansible-devops-assessment
+
 # Example Application Deployment
+
 ### Overview
 This repository contains the necessary configurations and instructions to deploy the Example application using Gunicorn, within a Python virtual environment, and managed by systemd on a Linux-based system.
 
@@ -17,6 +19,7 @@ Clone the Repository
 
 # Clone the Repository
 raju@ansible-control:~/ansible-devops-assessment$ git clone https://github.com/SRK-RAJU/ansible-devops-assessment.git
+
 # Install Ansible
 sudo apt update
 sudo apt install ansible
@@ -53,6 +56,7 @@ ansible_project/
 ├── inventory.ini
 ├── playbook.yml
 └── .git
+
 # Configure Ansible Inventory
 Edit the inventory file to include your target machine's IP address:
 [target]
@@ -65,6 +69,7 @@ chmod +x /opt/example/run.sh
 # run the playbook at control machine 
 
 raju@ansible-control:~/ansible-devops-assessment$ ansible-playbook -i inventory.ini playbook.yml --ask-vault-pass 
+
 Vault password:
 
 
@@ -75,8 +80,11 @@ sudo apt update
 sudo apt install python3 python3-venv python3-pip
 
 # Verify Virtual Environment and Packages Activate Virtual Environment:
+
 source /opt/example/venv/bin/activate
+
 # Check Installed Packages:
+
 pip list
 
 # Check Gunicorn Installation Verify that Gunicorn is installed correctly:
@@ -91,6 +99,7 @@ sudo systemctl status example.service
 # Permission Issues: If you encounter permission errors, ensure the following:
 
 sudo chown -R your-username:your-group /opt/example
+
 Dependency Issues: If pip install fails due to permission errors, use sudo for installing packages or adjust the virtual environment permissions.
 
 Gunicorn Errors: If you see errors related to Gunicorn, verify the run.sh script and the systemd service file configuration. Ensure that the bind address in the run.sh script is correctly specified.
@@ -100,6 +109,7 @@ Systemd Service Issues: If the service fails to start, check the logs:
 # journalctl -u example.service
 
 # Successful Results
+
 After following these steps, the example.service should be active and running. The logs should indicate that Gunicorn is listening on the specified port without errors:
 
 sudo systemctl status example.service
