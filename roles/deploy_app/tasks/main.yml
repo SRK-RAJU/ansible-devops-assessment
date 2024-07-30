@@ -1,0 +1,59 @@
+---
+- name: Create deployment folder
+  file:
+    path: "{{ deployment_folder }}"
+    state: directory
+    owner: srajukumargoud
+    group: srajukumargoud
+    mode: '0755'
+
+- name: Create virtual environment
+  become: yes
+  command: python3 -m venv {{ deployment_folder }}/venv
+  args:
+    creates: "{{ deployment_folder }}/venv"
+
+- name: Install application wheel
+  pip:
+    name: "{{ deployment_folder }}/{{ wheel_file }}"
+    virtualenv: "{{ deployment_folder }}/venv"
+
+- name: Create instance folder
+  file:
+    path: "{{ instance_path }}"
+    state: directory
+    owner: srajukumargoud
+    group: srajukumargoud
+    mode: '0755'
+
+- name: Deploy config.py
+  template:
+    src: config.py.j2
+    dest: "{{ instance_path }}/config.py"
+    owner: srajukumargoud
+    group: srajukumargoud
+    mode: '0644'
+
+- name: Deploy run.sh
+  copy:
+    src: run.sh
+    dest: "{{ deployment_folder }}/run.sh"
+    owner: srajukumargoud
+    group: srajukumargoud
+    mode: '0755'
+
+- name: Deploy example.service
+  template:
+    src: example.service.j2
+    dest: /etc/systemd/system/example.service
+    owner: srajukumargoud
+    group: srajukumargoud
+    mode: '0644'
+  notify: restart-example-service
+
+- name: Enable example.service
+  systemd:
+    name: example.service
+    enabled: yes
+    state: started
+

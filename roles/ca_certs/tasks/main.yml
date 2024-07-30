@@ -1,0 +1,24 @@
+---
+- name: Install standard CA certificates
+  apt:
+    name: ca-certificates
+    state: present
+
+- name: Copy custom CA certificates
+  copy:
+    src: "{{ item }}"
+    dest: /usr/local/share/ca-certificates/{{ item.split('/')[-1] }}"
+  with_fileglob:
+    - "{{ role_path }}/files/*.crt"
+
+- name: Update CA certificates
+  command: update-ca-certificates
+
+- name: Copy CA private keys to secure location
+  copy:
+    src: "{{ item }}"
+    dest: /etc/ssl/private/{{ item.split('/')[-1] }}"
+    mode: '0600'
+  with_fileglob:
+    - "{{ role_path }}/files/*.key"
+

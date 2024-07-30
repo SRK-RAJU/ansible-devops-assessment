@@ -1,0 +1,14 @@
+[Unit]
+Description=Gunicorn instance to serve example
+After=network.target
+
+[Service]
+User=srajukumargoud
+Group=www-data
+WorkingDirectory=/opt/example
+ExecStart=/opt/example/run.sh
+Environment="INSTANCE_PATH=/opt/example/instance"
+
+[Install]
+WantedBy=multi-user.target
+
