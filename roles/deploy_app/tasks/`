@@ -25,14 +25,6 @@
     owner: srajukumargoud
     group: srajukumargoud
     mode: '0755'
-   
-- name: Deploy app.py
-  copy:
-    src: app.py
-    dest: "{{ deployment_folder }}/app.py"
-    owner: srajukumargoud
-    group: srajukumargoud
-    mode: '0644'
 
 - name: Deploy config.py
   template:
@@ -43,8 +35,8 @@
     mode: '0644'
 
 - name: Deploy run.sh
-  template:
-    src: run.sh.j2
+  copy:
+    src: run.sh
     dest: "{{ deployment_folder }}/run.sh"
     owner: srajukumargoud
     group: srajukumargoud

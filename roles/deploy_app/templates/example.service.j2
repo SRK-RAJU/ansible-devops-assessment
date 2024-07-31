@@ -1,13 +1,15 @@
 [Unit]
 Description=Gunicorn instance to serve example
+
 After=network.target
 
 [Service]
 User=srajukumargoud
 Group=www-data
-WorkingDirectory=/opt/example
-ExecStart=/opt/example/run.sh
-Environment="INSTANCE_PATH=/opt/example/instance"
+WorkingDirectory={{ deployment_folder }}
+ExecStart={{ deployment_folder }}/venv/bin/gunicorn app:application --bind 0.0.0.0:{{ port }} --workers 2 --threads 2
+Environment="INSTANCE_PATH={{ instance_path }}"
+Restart:always
 
 [Install]
 WantedBy=multi-user.target
